@@ -4,11 +4,15 @@ const app = express()
 const bodyParser = require("body-parser")
 const morgan = require("morgan")
 const connection = require("./src/helper/mysql")
-const productController = require("./src/controllers/product")
+const router = require("./src/routes/index")
+
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 app.use(morgan("dev"))
+
+app.use(router)
+
 
 connection.connect((error)=> {
     if(error) throw error
@@ -16,17 +20,8 @@ connection.connect((error)=> {
 })
 
 
-app.get('/products', productController.getAllProduct )
 
-app.get('/products/:id', productController.detailProduct )
 
-app.post('/products', productController.createProduct )
-
-app.put('/products/:id', productController.editProduct )
-
-app.delete('/products/:id', productController.deleteProduuct )
-
-// app.get('/products/:keyword', productController.searchPproduct )
 
 
 
